@@ -1,0 +1,188 @@
+######################################
+## Cross section in pb for datasets
+##
+
+
+#13 TeV Spring 15 MC
+QCD_HT200to300_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Spring15     1.74e+06
+QCD_HT300to500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Spring15     3.67e+05
+QCD_HT500to700_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Spring15     2.94e+04
+QCD_HT700to1000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Spring15    6.524e+03 
+QCD_HT1000to1500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Spring15   1.064e+03
+QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Spring15   121.5
+QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_Spring15    25.42
+QCD_Pt_30to50_TuneCUETP8M1_13TeV_pythia8                           140932000
+QCD_Pt_50to80_TuneCUETP8M1_13TeV_pythia8                           19204300    
+QCD_Pt_80to120_TuneCUETP8M1_13TeV_pythia8                          2762530      
+QCD_Pt_120to170_TuneCUETP8M1_13TeV_pythia8                         471100
+QCD_Pt_170to300_TuneCUETP8M1_13TeV_pythia8                         117276
+QCD_Pt_300to470_TuneCUETP8M1_13TeV_pythia8                         7823
+QCD_Pt_470to600_TuneCUETP8M1_13TeV_pythia8                         648.2
+QCD_Pt_600to800_TuneCUETP8M1_13TeV_pythia8                         186.9
+QCD_Pt_800to1000_TuneCUETP8M1_13TeV_pythia8                        32.293
+QCD_Pt_1000to1400_TuneCUETP8M1_13TeV_pythia8                       9.4183
+QCD_Pt_1400to1800_TuneCUETP8M1_13TeV_pythia8                       0.84265
+QCD_Pt_1800to2400_TuneCUETP8M1_13TeV_pythia8                       0.12163
+QCD_Pt_2400to3200_TuneCUETP8M1_13TeV_pythia8                       0.00682981
+QCD_Pt_3200toInf_TuneCUETP8M1_13TeV_pythia8                        0.000165445
+
+#13 TeV Spring15 50ns MC -- cross-sections from MCM
+TTJets_TuneCUETP8M1_13TeV-madgraphMLM-pythia8                   502.2
+WJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8              60290
+ST_tW_antitop_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1  38.09
+ST_tW_top_5f_inclusiveDecays_13TeV-powheg-pythia8_TuneCUETP8M1      38.09
+ST_t-channel_antitop_4f_leptonDecays_13TeV-powheg-pythia8_TuneCUETP8M1 80.95
+ST_t-channel_top_4f_leptonDecays_13TeV-powheg-pythia8_TuneCUETP8M1     103.02
+
+#13 TeV SM backgrounds -- LO cross sections from MCM
+TTJets_MSDecaysCKM_central_Tune4C_13TeV-madgraph-tauola         424.5
+QCD_Pt-5to10_Tune4C_13TeV_pythia8                               80710000000
+QCD_Pt-10to15_Tune4C_13TeV_pythia8                              7528000000
+QCD_Pt-15to30_Tune4C_13TeV_pythia8                              2237000000
+QCD_Pt-30to50_Tune4C_13TeV_pythia8                              161500000
+QCD_Pt-50to80_Tune4C_13TeV_pythia8                              22110000
+QCD_Pt-80to120_Tune4C_13TeV_pythia8                             3000114.3
+QCD_Pt-120to170_Tune4C_13TeV_pythia8                            493200
+QCD_Pt-170to300_Tune4C_13TeV_pythia8                            120300
+QCD_Pt-300to470_Tune4C_13TeV_pythia8                            7475
+QCD_Pt-470to600_Tune4C_13TeV_pythia8                            587.1
+QCD_Pt-600to800_Tune4C_13TeV_pythia8                            167
+QCD_Pt-800to1000_Tune4C_13TeV_pythia8                           28.25
+QCD_Pt-1000to1400_Tune4C_13TeV_pythia8                          8.195
+QCD_Pt-1400to1800_Tune4C_13TeV_pythia8                          0.7346
+QCD_Pt-1800to2400_Tune4C_13TeV_pythia8                          0.102
+QCD_Pt-2400to3200_Tune4C_13TeV_pythia8                          0.00644
+QCD_Pt-3200_Tune4C_13TeV_pythia8                                0.000163
+QCD_HT_100To250_13TeV-madgraph					28730000
+QCD_HT_250To500_13TeV-madgraph					670500
+QCD_HT_500To1000_13TeV-madgraph					26740
+QCD_HT_1000ToInf_13TeV-madgraph					769.7
+DYJetsToLL_M-50_13TeV-madgraph-pythia8                          4746
+DYJetsToLL_M-50_HT-100to200_Tune4C_13TeV-madgraph-tauola        194.3
+DYJetsToLL_M-50_HT-200to400_Tune4C_13TeV-madgraph-tauola        52.24
+DYJetsToLL_M-50_HT-400to600_Tune4C_13TeV-madgraph-tauola        6.546
+DYJetsToLL_M-50_HT-600toInf_Tune4C_13TeV-madgraph-tauola        2.179
+ZJetsToNuNu_HT-100to200_Tune4C_13TeV-madgraph-tauola            372.6
+ZJetsToNuNu_HT-200to400_Tune4C_13TeV-madgraph-tauola            100.8
+ZJetsToNuNu_HT-400to600_Tune4C_13TeV-madgraph-tauola            11.99
+ZJetsToNuNu_HT-600toInf_Tune4C_13TeV-madgraph-tauola            4.113
+WJetsToLNu_13TeV-madgraph-pythia8-tauola                        50100
+WJetsToLNu_HT-100to200_Tune4C_13TeV-madgraph-tauola             1817
+WJetsToLNu_HT-200to400_Tune4C_13TeV-madgraph-tauola             471.6
+WJetsToLNu_HT-400to600_Tune4C_13TeV-madgraph-tauola             55.61
+WJetsToLNu_HT-600toInf_Tune4C_13TeV-madgraph-tauola             18.81
+GJet_Pt40_doubleEMEnriched_TuneZ2star_13TeV-pythia6             17180*0.038
+GJets_HT-100to200_Tune4C_13TeV-madgraph-tauola                  1534
+GJets_HT-200to400_Tune4C_13TeV-madgraph-tauola                  489.9
+GJets_HT-400to600_Tune4C_13TeV-madgraph-tauola                  62.05
+GJets_HT-600toInf_Tune4C_13TeV-madgraph-tauola                  20.87
+T_tW-channel-DR_Tune4C_13TeV-powheg-tauola                      35.0
+Tbar_tW-channel-DR_Tune4C_13TeV-powheg-tauola                   35.0
+TToLeptons_t-channel_Tune4C_13TeV-aMCatNLO-tauola               103.4
+TBarToLeptons_t-channel_Tune4C_13TeV-aMCatNLO-tauola            61.6
+TToLeptons_s-channel_Tune4C_13TeV-aMCatNLO-tauola               2.0
+TBarToLeptons_s-channel_Tune4C_13TeV-aMCatNLO-tauola            1.0
+WZJetsTo3LNu_Tune4C_13TeV-madgraph-tauola                       1.634
+TTWJets_Tune4C_13TeV-madgraph-tauola                            1.152
+TTZJets_Tune4C_13TeV-madgraph-tauola                            2.232
+
+#Higgs production -- cross sections assuming a higgs mass of 125.0 GeV, 
+#from https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt1314TeV
+#Higgs branching fraction to gamma gamma taken from 
+#https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR3
+GluGluToHToGG_M-125_13TeV-powheg-pythia6                        0.1001376
+VBF_HToGG_M-125_13TeV-powheg-pythia6                            0.00854544
+WH_ZH_HToGG_M-125_13TeV_pythia6                                 0.005129088
+TTbarH_HToGG_M-125_13TeV_amcatnlo-pythia8-tauola                0.00115938
+
+#SUSY SMSs
+SMS-T1bbbb_2J_mGl-1000_mLSP-900_Tune4C_13TeV-madgraph-tauola    0.325388
+SMS-T1bbbb_2J_mGl-1500_mLSP-100_Tune4C_13TeV-madgraph-tauola    0.0141903
+SMS-T1qqqq_2J_mGl-1000_mLSP-800_Tune4C_13TeV-madgraph-tauola    0.325388
+SMS-T1qqqq_2J_mGl-1400_mLSP-100_Tune4C_13TeV-madgraph-tauola    0.0252977
+SMS-T1tttt_2J_mGl-1200_mLSP-800_Tune4C_13TeV-madgraph-tauola    0.0856418
+SMS-T1tttt_2J_mGl-1500_mLSP-100_Tune4C_13TeV-madgraph-tauola    0.0141903
+SMS-T2bb_2J_mStop-600_mLSP-580_Tune4C_13TeV-madgraph-tauola     0.174599
+SMS-T2bb_2J_mStop-900_mLSP-100_Tune4C_13TeV-madgraph-tauola     0.0128895
+SMS-T2qq_2J_mStop-1200_mLSP-100_Tune4C_13TeV-madgraph-tauola    0.00159844
+SMS-T2qq_2J_mStop-600_mLSP-550_Tune4C_13TeV-madgraph-tauola     0.174599
+SMS-T2tt_2J_mStop-425_mLSP-325_Tune4C_13TeV-madgraph-tauola     1.31169
+SMS-T2tt_2J_mStop-500_mLSP-325_Tune4C_13TeV-madgraph-tauola     0.51848
+SMS-T2tt_2J_mStop-650_mLSP-325_Tune4C_13TeV-madgraph-tauola     0.107045
+SMS-T2tt_2J_mStop-850_mLSP-100_Tune4C_13TeV-madgraph-tauola     0.0189612
+
+
+#Run1 8TeV MC Samples
+ZJetsToNuNu_50_HT_100_TuneZ2Star_8TeV_madgraph                  381.2
+ZJetsToNuNu_100_HT_200_TuneZ2Star_8TeV_madgraph                 160.3
+ZJetsToNuNu_200_HT_400_TuneZ2Star_8TeV_madgraph                 41.49
+ZJetsToNuNu_400_HT_inf_TuneZ2Star_8TeV_madgraph                 5.274
+DYJetsToLL_HT-200To400_TuneZ2Star_8TeV-madgraph                 19.73*1.1973
+DYJetsToLL_HT-400ToInf_TuneZ2Star_8TeV-madgraph                 2.826*1.1973
+WJetsToLNu_TuneZ2Star_8TeV-madgraph-tarball                     (7322.0+5181.0)*3.0
+WJetsToLNu_HT-150To200_8TeV-madgraph                            235.6*1.2401
+WJetsToLNu_HT-200To250_8TeV-madgraph                            90.27*1.2401
+WJetsToLNu_HT-250To300_8TeV-madgraph                            48.01*1.2401
+WJetsToLNu_HT-300To400_8TeV-madgraph                            38.3*1.2401
+WJetsToLNu_HT-400ToInf_8TeV-madgraph                            25.22*1.2401
+DYToMuMu_M-20_CT10_TuneZ2star_8TeV-powheg-pythia6               1666.0*1.15906
+DYToEE_M-20_CT10_TuneZ2star_8TeV-powheg-pythia6                 1666.0*1.15906
+DYJetsToLL_M-50_TuneZ2Star_8TeV-madgraph-tarball                1177.6*3
+TTJets_FullLeptMGDecays_8TeV-madgraph-tauola                    14.3115*1.8034
+TTJets_SemiLeptMGDecays_8TeV-madgraph-tauola                    59.6994*1.8034
+TTJets_HadronicMGDecays_8TeV-madgraph                           62.2891*1.8034
+TTGJets_8TeV-madgraph                                           14.0
+TTWJets_8TeV-madgraph                                           0.232
+TTWWJets_8TeV-madgraph                                          0.002037
+TTZJets_8TeV-madgraph                                           0.208
+T_s-channel_TuneZ2star_8TeV-powheg-tauola                       2.82*1.3439716312
+T_t-channel_TuneZ2star_8TeV-powheg-tauola                       47.0*1.1674468085
+T_tW-channel-DR_TuneZ2star_8TeV-powheg-tauola                   10.7*1.0373831776
+Tbar_s-channel_TuneZ2star_8TeV-powheg-tauola                    1.57*1.1210191083
+Tbar_t-channel_TuneZ2star_8TeV-powheg-tauola                    25.0*1.1896 
+Tbar_tW-channel-DR_TuneZ2star_8TeV-powheg-tauola                10.7*1.0373831776
+WWJetsTo2L2Nu_TuneZ2star_8TeV-madgraph-tauola                   47.0*(1-0.0305)*(0.1080*3)*(0.1080*3)*1.2151 
+WZJetsTo2L2Q_TuneZ2star_8TeV-madgraph-tauola                    26.2*(0.6760)*0.101*1.23344
+WZJetsTo3LNu_8TeV_TuneZ2Star_madgraph_tauola                    26.2*(0.1080*3)*0.101*1.23344
+ZZJetsTo2L2Nu_TuneZ2star_8TeV-madgraph-tauola                   0.364791
+ZZJetsTo2L2Q_TuneZ2star_8TeV-madgraph-tauola                    2.448690
+ZZJetsTo4L_TuneZ2star_8TeV-madgraph-tauola                      0.176908
+GluGluToHToZZTo4L_M-125_8TeV-powheg-pythia6                    19.27*0.000275
+TTbarH_HToZZTo4L_M-125_8TeV-pythia6                            0.1293*0.000275
+VBF_HToZZTo4L_M-125_8TeV-powheg-pythia6                        1.578*0.000275
+WH_HToZZTo4L_M-125_8TeV-pythia6                                0.7046*0.000275
+ZH_HToZZTo4L_M-125_8TeV-pythia6                                0.4153*0.000275
+GluGluToZZTo4L_8TeV-gg2zz-pythia6                              0.0048
+GluGluToZZTo2L2L_TuneZ2star_8TeV-gg2zz-pythia6                 0.01203
+ZZTo2e2mu_8TeV-powheg-pythia6                                  0.1767
+ZZTo2e2tau_8TeV-powheg-pythia6                                 0.1767
+ZZTo2mu2tau_8TeV-powheg-pythia6                                0.1767
+ZZTo4e_8TeV-powheg-pythia6                                     0.07691
+ZZTo4mu_8TeV-powheg-pythia6                                    0.07691
+ZZTo4tau_8TeV-powheg-pythia6                                   0.07691
+TTTT_TuneZ2star_8TeV-madgraph-tauola                            9.144e-04
+#Gamma+jets samples -- tentative!
+GJets_HT-40To100_8TeV-madgraph                                  2.093e4
+GJets_HT-100To200_8TeV-madgraph                                 5.212e3
+GJets_HT-200To400_8TeV-madgraph                                 9.605e2
+GJets_HT-400ToInf_8TeV-madgraph                                 1.075e2
+GJet_Pt-20to40_doubleEMEnriched_TuneZ2star_8TeV-pythia6         8.19e+04*1.84e-03
+GJet_Pt40_doubleEMEnriched_TuneZ2star_8TeV-pythia6              8.84e+03*5.39e-02
+QCD_Pt-30to40_doubleEMEnriched_TuneZ2star_8TeV-pythia6          5.20e+07*2.35e-04
+QCD_Pt-40_doubleEMEnriched_TuneZ2star_8TeV-pythia6              2.37e+07*2.18e-03
+QCD_Pt_20_30_EMEnriched_TuneZ2star_8TeV_pythia6                 2.886e+08*0.0101
+QCD_Pt_30_80_EMEnriched_TuneZ2star_8TeV_pythia6                 7.433e+07*0.0621
+QCD_Pt_80_170_EMEnriched_TuneZ2star_8TeV_pythia6                1.19e+06*0.1539
+QCD_Pt_170_250_EMEnriched_TuneZ2star_8TeV_pythia6               3.10e+04*0.148
+QCD_Pt_250_350_EMEnriched_TuneZ2star_8TeV_pythia6               4.25e+03*0.131
+QCD_Pt_350_EMEnriched_TuneZ2star_8TeV_pythia6                   810*0.11
+ZG_Inclusive_8TeV-madgraph                                      172.1
+WGToLNuG_TuneZ2star_8TeV-madgraph-tauola                        553.9
+QCD_HT-100To250_TuneZ2star_8TeV-madgraph-pythia                 10367000.
+QCD_HT-250To500_TuneZ2star_8TeV-madgraph-pythia6                276000.
+QCD_HT-500To1000_TuneZ2star_8TeV-madgraph-pythia6               8426.
+QCD_HT-1000ToInf_TuneZ2star_8TeV-madgraph-pythia6               204.
+ZH_ZToNuNu_HToBB_M-125_8TeV-powheg-herwigpp                     0.047926
+ZH_ZToLL_HToBB_M-125_8TeV-powheg-herwigpp                       0.024202
+WH_WToLNu_HToBB_M-125_8TeV-powheg-herwigpp                      0.132537
+TTH_HToBB_M-125_8TeV-pythia6                                    0.0746
