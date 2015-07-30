@@ -18,7 +18,7 @@
 #include "assert.h"
 #include "math.h"
 
-#include "RazorAnalyzer/include/ControlSampleEvents.h"
+#include "RazorAnalyzerRun1/include/ControlSampleEvents.h"
 #include "include/MacroHelper.h"
 
 using namespace std;
@@ -38,8 +38,8 @@ void SetHistogramColor(TH1 *hist, string name){
 }
 
 void CompareDataFitCRs(){
-    //bool makeScaleFactors = true; //compute the scale factors for each control region
-    bool makeScaleFactors = false; 
+    bool makeScaleFactors = true; //compute the scale factors for each control region
+    //bool makeScaleFactors = false; 
 
     gROOT->SetBatch();
 
@@ -60,7 +60,7 @@ void CompareDataFitCRs(){
     //get input files
     map<string, map<string, string> > mcfilenames;
     map<string, map<string, string> > datafilenames;
-    string baseDir = "root://eoscms://store/group/phys_susy/razor/Run2Analysis/RunOneRazorControlRegions/";
+    string baseDir = "root://eoscms://store/group/phys_susy/razor/Run1Analysis/RunOneRazorControlRegions/";
     string mcSuffix = "_1pb_weighted.root";
     string dataSuffix = "_GoodLumi.root";
 
@@ -157,13 +157,6 @@ void CompareDataFitCRs(){
         }
     }
 
-    //luminosities collected by the various photon triggers
-    float lumi_HLTPhoton50  = 1.353e0 + 4.921e0 + 7.947e0 + 8.131e0;
-    float lumi_HLTPhoton75  = 8.111e0 + 2.953e1 + 4.768e1 + 4.879e1;
-    float lumi_HLTPhoton90  = 1.622e1 + 6.408e1 + 1.010e2 + 9.948e1;
-    float lumi_HLTPhoton135 = 8.893e2 + 1.476e2 + 5.429e3 + 7.318e3;
-    float lumi_HLTPhoton150 = 8.893e2 + 4.429e3 + 7.152e3 + 7.318e3;
-
     map<string, TH2F*> SFHists;
     //load TTbar scale factor histograms
     TFile *SFFileTTJets = new TFile("data/ScaleFactors/Run1/TTBarSingleLeptonScaleFactors.root");
@@ -223,6 +216,7 @@ void CompareDataFitCRs(){
     //signalNames["ZNuNuPhoton"] = "GJets";
     TFile *outSFFile;
     if(makeScaleFactors) outSFFile = new TFile("mcScaleFactorsRunOne.root", "RECREATE");
+    map<string, TH2F* > newScaleFactors;
 
     for(auto &region : controlRegions){ 
         string theSkim = controlRegionSkim[region];
@@ -255,10 +249,19 @@ void CompareDataFitCRs(){
                 // Apply scale factors
                 eventWeight *= curTree->getMCCorrection(pileupWeightHist, region);
 
-                //Data/MC scale factors
-                if(!makeScaleFactors && region != "ZNuNuDilepton" && region != "ZNuNuSingleLepton" && region != "ZNuNuPhoton"){
-                    if(sample == "TTJets" || sample == "WJets" || sample == "DYJets" || sample == "ZJetsNuNu"){
+                //Data/MC scale factors -- apply existing SFs
+                if(!makeScaleFactors){
+                    if(SFHists.count(sample) > 0){
+                        //cout << "Applying " << sample << " scale factor from file" << endl;
                         pair<double, double> sfAndErr = getDataMCSFAndError(SFHists[sample], curTree->MR, curTree->Rsq);
+                        eventWeight *= sfAndErr.first; //multiply event weight by scale factor
+                        sysErrorSquared += curTree->weight*curTree->weight*sfAndErr.second*sfAndErr.second; //add (w*sigma)^2 to the systematic uncertainty
+                    }
+                }
+                else{ //apply SFs computed so far
+                    if(newScaleFactors.count(sample) > 0 && sample != signalNames[region]){
+                        //cout << "Applying " << sample << " scale factor calculated earlier" << endl;
+                        pair<double, double> sfAndErr = getDataMCSFAndError(newScaleFactors[sample], curTree->MR, curTree->Rsq);
                         eventWeight *= sfAndErr.first; //multiply event weight by scale factor
                         sysErrorSquared += curTree->weight*curTree->weight*sfAndErr.second*sfAndErr.second; //add (w*sigma)^2 to the systematic uncertainty
                     }
@@ -346,26 +349,8 @@ void CompareDataFitCRs(){
 
                 //reweight for photon triggers
                 if(region == "ZNuNuPhoton"){
-                    double triggerWeightRestricted = 0.0;
-                    //get weight if associate each photon trigger with a particular pt range
-                    if(curTree->HLT_Photon150 && curTree->pho1.Pt() > 165){ 
-                        triggerWeightRestricted = 1.0;
-                    }
-                    else if(curTree->HLT_Photon135 && curTree->pho1.Pt() > 150 && curTree->pho1.Pt() < 165){
-                        triggerWeightRestricted = lumi_HLTPhoton150/lumi_HLTPhoton135;
-                    }
-                    else if(curTree->HLT_Photon90 && curTree->pho1.Pt() > 100 && curTree->pho1.Pt() < 150){
-                        triggerWeightRestricted = lumi_HLTPhoton150/lumi_HLTPhoton90;
-                    }
-                    else if(curTree->HLT_Photon75 && curTree->pho1.Pt() > 90 && curTree->pho1.Pt() < 100){
-                        triggerWeightRestricted = lumi_HLTPhoton150/lumi_HLTPhoton75; 
-                    }
-                    else if(curTree->HLT_Photon50 && curTree->pho1.Pt() < 90){
-                        triggerWeightRestricted = lumi_HLTPhoton150/lumi_HLTPhoton50;
-                    }
-                    eventWeight *= triggerWeightRestricted;
-
                     if(curTree->pho1.Pt()>5000) continue; // reject noise
+                    eventWeight *= curTree->getPhotonTriggerWeight();
                 }
 
                 ///////////////////////////////////////////////////////////
@@ -401,9 +386,18 @@ void CompareDataFitCRs(){
                 } //end if
             } //end loop over samples
             //create data/MC scale factor histogram and save it
-            TH2F *dataOverMC = (TH2F*)razorHistosData[region]->Clone(Form("%sScaleFactors", region.c_str()));
-            dataOverMC->Divide(razorHistosMC[region][signalNames[region]]);
-            dataOverMC->Write();
+            cout << "Creating scale factor histogram for " << region << endl;
+            TH2F *newSFHist = (TH2F*)razorHistosData[region]->Clone(Form("%sScaleFactors", region.c_str()));
+            newSFHist->Divide(razorHistosMC[region][signalNames[region]]);
+            newSFHist->Write();
+            if(region == "ZNuNuDilepton" || region == "ZNuNuSingleLepton" || region == "ZNuNuPhoton"){
+                if(newScaleFactors.count("ZJetsNuNu") == 0){
+                    newScaleFactors["ZJetsNuNu"] = newSFHist;
+                }
+            }
+            else if(newScaleFactors.count(signalNames[region]) == 0){
+                newScaleFactors[signalNames[region]] = newSFHist;
+            }
         } //end if
 
     } //end of loop over control regions

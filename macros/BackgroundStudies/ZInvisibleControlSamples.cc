@@ -75,7 +75,7 @@ void ZInvisibleControlSamples(){
     suffixes["ZJets"] = "";
 
     map<string, string> cuts;
-    cuts["DYJets"] = "nLooseMuons == 2 && hlt_dimuon && recoZmass > 71 && recoZmass < 111 && MR_noZ > 300 && Rsq_noZ > 0.15 && numJets80_noZ > 1";
+    cuts["DYJets"] = "leadingMuonPt > 25 && subleadingMuonPt > 25 && nLooseMuons >= 2 && hlt_dimuon && recoZmass > 80 && recoZmass < 110 && MR_noZ > 300 && Rsq_noZ > 0.15 && numJets80_noZ > 1";
     cuts["WJets"] = "nBTaggedJets == 0 && nTightMuons == 1 && nLooseMuons == 1 && hlt_singlemu && MR_noW > 300 && Rsq_noW > 0.15 && numJets80_noW > 1 && mTLepMet > 30 && mTLepMet < 100";
     cuts["GJets"] = "hlt_photon && MR_noPho > 300 && Rsq_noPho > 0.15 && numJets80_noPho > 1 && leadingPhotonPt > 80";
     cuts["ZJets"] = "nLooseMuons == 0 && nLooseElectrons == 0 && hlt_razor && MR > 300 && Rsq > 0.15 && numJets80 > 1";
@@ -97,29 +97,29 @@ void ZInvisibleControlSamples(){
     map<string, TFile*> mcfiles;
     map<string, TFile*> datafiles;
     //signal processes
-    mcfiles["DYJets"] = new TFile("./DYJetsRun1_19700pb_weighted.root");
-    mcfiles["WJets"] = new TFile("./WJetsRun1_19700pb_weighted.root");
-    mcfiles["GJets"] = new TFile("./GJetsRun1_19700pb_weighted.root");
-    mcfiles["ZJets"] = new TFile("./ZJetsRun1_19700pb_weighted.root");
+    mcfiles["DYJets"] = new TFile("root://eoscms:///eos/cms/store/group/phys_susy/razor/Run1Analysis/RunOneRazorControlRegions/ZToNuNuControlRegions/DYJetsRun1_19700pb_weighted.root");
+    mcfiles["WJets"] = new TFile("root://eoscms:///eos/cms/store/group/phys_susy/razor/Run1Analysis/RunOneRazorControlRegions/ZToNuNuControlRegions/WJetsRun1_19700pb_weighted.root");
+    mcfiles["GJets"] = new TFile("root://eoscms:///eos/cms/store/group/phys_susy/razor/Run1Analysis/RunOneRazorControlRegions/ZToNuNuControlRegions/GJetsRun1_19700pb_weighted.root");
+    mcfiles["ZJets"] = new TFile("root://eoscms:///eos/cms/store/group/phys_susy/razor/Run1Analysis/RunOneRazorControlRegions/ZToNuNuControlRegions/ZJetsRun1_19700pb_weighted.root");
     //backgrounds for WJets
-    mcfiles["TTJets"] = new TFile("./TTJetsRun1_19700pb_weighted.root");
-    mcfiles["Top"] = new TFile("./SingleTopRun1_19700pb_weighted.root");
-    mcfiles["TTW"] = new TFile("./TTWJetsRun1_19700pb_weighted.root");
-    mcfiles["TTZ"] = new TFile("./TTZJetsRun1_19700pb_weighted.root");
+    mcfiles["TTJets"] = new TFile("root://eoscms:///eos/cms/store/group/phys_susy/razor/Run1Analysis/RunOneRazorControlRegions/ZToNuNuControlRegions/TTJetsRun1_19700pb_weighted.root");
+    mcfiles["Top"] = new TFile("root://eoscms:///eos/cms/store/group/phys_susy/razor/Run1Analysis/RunOneRazorControlRegions/ZToNuNuControlRegions/SingleTopRun1_19700pb_weighted.root");
+    mcfiles["TTW"] = new TFile("root://eoscms:///eos/cms/store/group/phys_susy/razor/Run1Analysis/RunOneRazorControlRegions/ZToNuNuControlRegions/TTWJetsRun1_19700pb_weighted.root");
+    mcfiles["TTZ"] = new TFile("root://eoscms:///eos/cms/store/group/phys_susy/razor/Run1Analysis/RunOneRazorControlRegions/ZToNuNuControlRegions/TTZJetsRun1_19700pb_weighted.root");
     //backgrounds for DYJets
     mcfiles["TTJetsDY"] = mcfiles["TTJets"];
     mcfiles["TopDY"] = mcfiles["Top"];
     mcfiles["TTWDY"] = mcfiles["TTW"];
     mcfiles["TTZDY"] = mcfiles["TTZ"];
     //backgrounds for GJets
-    mcfiles["QCD"] = new TFile("./QCDRun1_19700pb_weighted.root");
-    mcfiles["WG"] = new TFile("./WGJetsRun1_19700pb_weighted.root");
-    mcfiles["ZG"] = new TFile("./ZGJetsRun1_19700pb_weighted.root");
-    mcfiles["TTG"] = new TFile("./TTGJetsRun1_19700pb_weighted.root");
+    mcfiles["QCD"] = new TFile("root://eoscms:///eos/cms/store/group/phys_susy/razor/Run1Analysis/RunOneRazorControlRegions/ZToNuNuControlRegions/QCDRun1_19700pb_weighted.root");
+    mcfiles["WG"] = new TFile("root://eoscms:///eos/cms/store/group/phys_susy/razor/Run1Analysis/RunOneRazorControlRegions/ZToNuNuControlRegions/WGJetsRun1_19700pb_weighted.root");
+    mcfiles["ZG"] = new TFile("root://eoscms:///eos/cms/store/group/phys_susy/razor/Run1Analysis/RunOneRazorControlRegions/ZToNuNuControlRegions/ZGJetsRun1_19700pb_weighted.root");
+    mcfiles["TTG"] = new TFile("root://eoscms:///eos/cms/store/group/phys_susy/razor/Run1Analysis/RunOneRazorControlRegions/ZToNuNuControlRegions/TTGJetsRun1_19700pb_weighted.root");
     //data
-    datafiles["DYJets"] = new TFile("./DoubleMuRun1_goodlumi.root");
-    datafiles["WJets"] = new TFile("./SingleMuRun1_goodlumi.root");
-    datafiles["GJets"] = new TFile("./PhotonRun1_goodlumi.root");
+    datafiles["DYJets"] = new TFile("root://eoscms:///eos/cms/store/group/phys_susy/razor/Run1Analysis/RunOneRazorControlRegions/ZToNuNuControlRegions/DoubleMuRun1_goodlumi.root");
+    datafiles["WJets"] = new TFile("root://eoscms:///eos/cms/store/group/phys_susy/razor/Run1Analysis/RunOneRazorControlRegions/ZToNuNuControlRegions/SingleMuRun1_goodlumi.root");
+    datafiles["GJets"] = new TFile("root://eoscms:///eos/cms/store/group/phys_susy/razor/Run1Analysis/RunOneRazorControlRegions/ZToNuNuControlRegions/PhotonRun1_goodlumi.root");
 
     //get trees and set branches
     map<string, TTree*> mctrees;

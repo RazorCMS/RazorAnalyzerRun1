@@ -1129,6 +1129,35 @@ class ControlSampleEvents {
       return corrFactor;
   }
 
+  //get the correct event weight in data for events passing a photon trigger
+  float getPhotonTriggerWeight(){
+    //luminosities collected by each photon trigger
+    float lumi_HLTPhoton50  = 1.353e0 + 4.921e0 + 7.947e0 + 8.131e0;
+    float lumi_HLTPhoton75  = 8.111e0 + 2.953e1 + 4.768e1 + 4.879e1;
+    float lumi_HLTPhoton90  = 1.622e1 + 6.408e1 + 1.010e2 + 9.948e1;
+    float lumi_HLTPhoton135 = 8.893e2 + 1.476e2 + 5.429e3 + 7.318e3;
+    float lumi_HLTPhoton150 = 8.893e2 + 4.429e3 + 7.152e3 + 7.318e3;
+
+    double triggerWeight = 0.0;
+    //get weight if each photon trigger is associated with a particular pt range
+    if(HLT_Photon150 && pho1.Pt() > 165){ 
+        triggerWeight = 1.0;
+    }
+    else if(HLT_Photon135 && pho1.Pt() > 150 && pho1.Pt() < 165){
+        triggerWeight = lumi_HLTPhoton150/lumi_HLTPhoton135;
+    }
+    else if(HLT_Photon90 && pho1.Pt() > 100 && pho1.Pt() < 150){
+        triggerWeight = lumi_HLTPhoton150/lumi_HLTPhoton90;
+    }
+    else if(HLT_Photon75 && pho1.Pt() > 90 && pho1.Pt() < 100){
+        triggerWeight = lumi_HLTPhoton150/lumi_HLTPhoton75; 
+    }
+    else if(HLT_Photon50 && pho1.Pt() < 90){
+        triggerWeight = lumi_HLTPhoton150/lumi_HLTPhoton50;
+    }
+    return triggerWeight;
+  }
+
  private:
   TLorentzVector* genlep1Ptr;
   TLorentzVector* genlep2Ptr;
