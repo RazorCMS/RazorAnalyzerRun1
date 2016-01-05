@@ -16,34 +16,34 @@ class ControlSampleEvents {
   
   /// bit map
   /// DON'T CHANGE ORDER
-  enum TreeType { kTreeType_Default = 0,	            // dummy	      
-		  kTreeType_OneLepton_Full = 1,             // lepton NOT added to MET
-		  kTreeType_OneLepton_Reduced = 2,          // lepton NOT added to MET
-		  kTreeType_OneLeptonAdd2MET_Full = 3,      // lepton added to MET
-		  kTreeType_OneLeptonAdd2MET_Reduced = 4,   // lepton added to MET
-		  kTreeType_Dilepton_Full = 5,              // lepton NOT added to MET
-		  kTreeType_Dilepton_Reduced = 6,           // lepton NOT added to MET
-		  kTreeType_DileptonAdd2MET_Full = 7,       // lepton added to MET
-		  kTreeType_DileptonAdd2MET_Reduced = 8,    // lepton added to MET
-		  kTreeType_Photon_Full = 9,                 // photon added to MET
-		  kTreeType_Photon_Reduced = 10,             // photon added to MET
-		  kTreeType_ZeroLepton_Full = 11,            // No Leptons, No Photons
-		  kTreeType_QCD_Full = 20,   
+  enum TreeType { kTreeType_Default = 0,                    // dummy          
+                  kTreeType_OneLepton_Full = 1,             // lepton NOT added to MET
+                  kTreeType_OneLepton_Reduced = 2,          // lepton NOT added to MET
+                  kTreeType_OneLeptonAdd2MET_Full = 3,      // lepton added to MET
+                  kTreeType_OneLeptonAdd2MET_Reduced = 4,   // lepton added to MET
+                  kTreeType_Dilepton_Full = 5,              // lepton NOT added to MET
+                  kTreeType_Dilepton_Reduced = 6,           // lepton NOT added to MET
+                  kTreeType_DileptonAdd2MET_Full = 7,       // lepton added to MET
+                  kTreeType_DileptonAdd2MET_Reduced = 8,    // lepton added to MET
+                  kTreeType_Photon_Full = 9,                 // photon added to MET
+                  kTreeType_Photon_Reduced = 10,             // photon added to MET
+                  kTreeType_ZeroLepton_Full = 11,            // No Leptons, No Photons
+                  kTreeType_QCD_Full = 20,   
   };
   
   //*******************************************
   //=== Process IDs  ====
   //*******************************************
   enum BkgProcessId { kData = 0,
-		      kQCD = 1,
-		      kWJets = 2,
-		      kZJets = 3,
-		      kTTJets = 4,
-		      kSingleT = 5,
-		      kVV = 6,
-		      kHiggs = 7,
-		      kSUSY = 99,
-		      kUnknown = 999
+                      kQCD = 1,
+                      kWJets = 2,
+                      kZJets = 3,
+                      kTTJets = 4,
+                      kSingleT = 5,
+                      kVV = 6,
+                      kHiggs = 7,
+                      kSUSY = 99,
+                      kUnknown = 999
   };
 
   /// variables
@@ -125,6 +125,7 @@ class ControlSampleEvents {
   UInt_t                  NBJetsTight;
   Float_t                 HT;
   Float_t                 lep1MT;
+  Float_t                 mll;
   Bool_t                  Flag_HBHENoiseFilter;//
   Bool_t                  Flag_CSCTightHaloFilter;
   Bool_t                  Flag_hcalLaserEventFilter; //
@@ -298,6 +299,7 @@ class ControlSampleEvents {
     NBJetsTight          = 0;
     HT                   = 0.0;      
     lep1MT               = 0.0;  
+    mll                  = 0.0;
     Flag_HBHENoiseFilter = 0.0;//
     Flag_CSCTightHaloFilter = 0.0;
     Flag_hcalLaserEventFilter = 0.0; //
@@ -321,7 +323,7 @@ class ControlSampleEvents {
     recoWpt         = -99.;
     recoWphi        = -99.;
     MT2             = -99.;
-	
+        
     pho1 = TLorentzVector();
     pho2 = TLorentzVector();
 
@@ -406,7 +408,7 @@ class ControlSampleEvents {
     tree_->Branch("Flag_trkPOG_manystripclus53X", &Flag_trkPOG_manystripclus53X,"Flag_trkPOG_manystripclus53X/O");
     tree_->Branch("Flag_trkPOG_toomanystripclus53X", &Flag_trkPOG_toomanystripclus53X,"Flag_trkPOG_toomanystripclus53X/O");
     tree_->Branch("Flag_trkPOG_logErrorTooManyClusters", &Flag_trkPOG_logErrorTooManyClusters,"Flag_trkPOG_logErrorTooManyClusters/O");
-    tree_->Branch("Flag_METFilters", &Flag_METFilters,"Flag_METFilters/O");	
+    tree_->Branch("Flag_METFilters", &Flag_METFilters,"Flag_METFilters/O");     
 
     // book the branches that go into only One Lepton trees
     if (treeType == kTreeType_OneLepton_Reduced ) {
@@ -448,7 +450,7 @@ class ControlSampleEvents {
       tree_->Branch("jet2PassCSVMedium",&jet2PassCSVMedium,"jet2PassCSVMedium/O");
       tree_->Branch("jet2PassCSVTight",&jet2PassCSVTight,"jet2PassCSVTight/O");
       tree_->Branch("dPhiRazor",&dPhiRazor,"dPhiRazor/F");
-      tree_->Branch("HT",&HT,"HT/F");	  
+      tree_->Branch("HT",&HT,"HT/F");     
       tree_->Branch("genlep1", "TLorentzVector", &genlep1Ptr);
       tree_->Branch("lep1",    "TLorentzVector", &lep1Ptr);
       tree_->Branch("bjet1",   "TLorentzVector", &bjet1Ptr);
@@ -502,9 +504,10 @@ class ControlSampleEvents {
       tree_->Branch("jet2PassCSVMedium",&jet2PassCSVMedium,"jet2PassCSVMedium/O");
       tree_->Branch("jet2PassCSVTight",&jet2PassCSVTight,"jet2PassCSVTight/O");
       tree_->Branch("lep1MT",&lep1MT,"lep1MT/F");
+      tree_->Branch("mll",&mll,"mll/F");      
       tree_->Branch("MET",&MET,"MET/F");
       tree_->Branch("dPhiRazor",&dPhiRazor,"dPhiRazor/F");
-      tree_->Branch("HT",&HT,"HT/F");	  
+      tree_->Branch("HT",&HT,"HT/F");     
       tree_->Branch("genlep1", "TLorentzVector", &genlep1Ptr);
       tree_->Branch("genlep2", "TLorentzVector", &genlep2Ptr);
       tree_->Branch("lep1",    "TLorentzVector", &lep1Ptr);
@@ -563,7 +566,7 @@ class ControlSampleEvents {
       tree_->Branch("pho1","TLorentzVector", &pho1Ptr);
       tree_->Branch("jet1",    "TLorentzVector", &jet1Ptr);
       tree_->Branch("jet2",    "TLorentzVector", &jet2Ptr);
-	  
+          
       tree_->Branch("MR_NoPho",&MR_NoPho,"MR_NoPho/F");
       tree_->Branch("Rsq_NoPho",&Rsq_NoPho,"Rsq_NoPho/F");
       tree_->Branch("MET_NoPho",&MET_NoPho,"MET_NoPho/F");
@@ -603,7 +606,7 @@ class ControlSampleEvents {
       tree_->Branch("minDPhi",&minDPhi,"minDPhi/F"); 
       tree_->Branch("minDPhiN",&minDPhiN,"minDPhiN/F");
       tree_->Branch("dPhiRazor",&dPhiRazor,"dPhiRazor/F");
-      tree_->Branch("HT",&HT,"HT/F");	  
+      tree_->Branch("HT",&HT,"HT/F");     
       tree_->Branch("bjet1",   "TLorentzVector", &bjet1Ptr);
       tree_->Branch("bjet2",   "TLorentzVector", &bjet2Ptr);
       tree_->Branch("jet1",    "TLorentzVector", &jet1Ptr);
@@ -657,7 +660,7 @@ class ControlSampleEvents {
       tree_->SetBranchAddress("lep1PassLoose",&lep1PassLoose);
       tree_->SetBranchAddress("lep1PassTight",&lep1PassTight);
       tree_->SetBranchAddress("lep1MatchedGenLepIndex",&lep1MatchedGenLepIndex);
-      tree_->SetBranchAddress("lep1MT",&lep1MT);	
+      tree_->SetBranchAddress("lep1MT",&lep1MT);        
       tree_->SetBranchAddress("MET",&MET);
     }
 
@@ -742,6 +745,7 @@ class ControlSampleEvents {
       tree_->SetBranchAddress("jet2PassCSVMedium",&jet2PassCSVMedium);
       tree_->SetBranchAddress("jet2PassCSVTight",&jet2PassCSVTight);
       tree_->SetBranchAddress("lep1MT",&lep1MT);
+      tree_->SetBranchAddress("mll",&mll);
       tree_->SetBranchAddress("MET",&MET);
       tree_->SetBranchAddress("dPhiRazor",&dPhiRazor);
       tree_->SetBranchAddress("HT",&HT);
@@ -805,7 +809,7 @@ class ControlSampleEvents {
       tree_->SetBranchAddress("pho1", &pho1Ptr);
       tree_->SetBranchAddress("jet1" ,&jet1Ptr);
       tree_->SetBranchAddress("jet2" ,&jet2Ptr);
-	  
+          
       tree_->SetBranchAddress("MR_NoPho",&MR_NoPho);
       tree_->SetBranchAddress("Rsq_NoPho",&Rsq_NoPho);
       tree_->SetBranchAddress("MET_NoPho",&MET_NoPho);
@@ -860,6 +864,9 @@ class ControlSampleEvents {
   //TTBarDilepton
   //WSingleLepton
   //ZLLDilepton
+  //ZNuNuDilepton
+  //ZNuNuSingleLepton
+  //ZNuNuPhoton
   bool inControlSample(string sampleName, string option = "", bool isRunOne = true){
       using namespace std;
 
@@ -979,6 +986,73 @@ class ControlSampleEvents {
           //passes selection
           return true;
       }
+      else if(sampleName == "ZNuNuDilepton"){
+          //HLT
+          if(isRunOne){
+              bool passedTrigger = HLTDecision[3] || HLTDecision[4] || HLTDecision[12];
+              if(!passedTrigger) return false;
+          }
+          //leptons = two loose ele or mu with pt > 25, mass inside Z window
+          //if(abs(lep1Type) != 11 && abs(lep1Type) != 13) return false;
+          //if(abs(lep2Type) != 11 && abs(lep2Type) != 13) return false;
+          //if(!lep1PassLoose) return false;
+          //if(!lep2PassLoose) return false;
+          if(lep1.Pt() < 25) return false;
+          if(lep2.Pt() < 25) return false;
+          float mLL = (lep1+lep2).M();
+          if(mLL < 80 || mLL > 110) return false;
+
+          //b-tag requirement
+          //if(NBJetsMedium > 0) return false;
+
+          //razor baseline cut
+          if(MR_NoZ < 300 || Rsq_NoZ < 0.15) return false;
+
+          //passes selection
+          return true;
+      }
+      else if(sampleName == "ZNuNuSingleLepton"){
+          //HLT
+          if(isRunOne){
+              bool passedTrigger = HLTDecision[0] || HLTDecision[1] || HLTDecision[8] || HLTDecision[9]; 
+              if(!passedTrigger) return false;
+          }
+
+          //lepton = tight ele or mu with pt > 30
+          if(abs(lep1Type) != 11 && abs(lep1Type) != 13) return false;
+          if(!lep1PassTight) return false;
+          if(lep1.Pt() < 30) return false;
+
+          //MET and MT cuts
+          if(MET < 30) return false;
+          if(lep1MT < 30 || lep1MT > 100) return false;
+
+          //b-tag requirement
+          if(NBJetsMedium > 0) return false;
+
+          //razor baseline cut
+          if(MR_NoW < 300 || Rsq_NoW < 0.15) return false;
+
+          //passes selection
+          return true;
+      }
+      else if(sampleName == "ZNuNuPhoton"){
+          if(isRunOne){
+              //HLT
+              bool passedTrigger = HLTDecision[29] || HLTDecision[30] || HLTDecision[31] || HLTDecision[32] || HLTDecision[33] || HLTDecision[34];
+              if(!passedTrigger) return false;
+          }
+
+          //photon ID
+          if(!pho1PassMedium) return false;
+          if(pho1.Pt() < 80) return false;
+
+          //razor baseline cut
+          if(MR_NoPho < 300 || Rsq_NoPho < 0.15) return false;
+
+          //passes selection
+          return true;
+      }
       else{
           std::cout << "Warning: control sample " << sampleName << " is not recognized." << std::endl;
       }
@@ -998,7 +1072,7 @@ class ControlSampleEvents {
           else if (bjet1.Pt() < 80) MCEff = 0.70;
           else if (bjet1.Pt() < 120) MCEff = 0.73;
           else if (bjet1.Pt() < 210) MCEff = 0.73;
-          else MCEff = 0.66;				 
+          else MCEff = 0.66;                             
           if (bjet1PassMedium) bjet1EventScaleFactor = bjet1ScaleFactor;
           else bjet1EventScaleFactor = ( 1/MCEff - bjet1ScaleFactor) / ( 1/MCEff - 1);
       }
@@ -1009,7 +1083,7 @@ class ControlSampleEvents {
           else if (bjet2.Pt() < 80) MCEff = 0.70;
           else if (bjet2.Pt() < 120) MCEff = 0.73;
           else if (bjet2.Pt() < 210) MCEff = 0.73;
-          else MCEff = 0.66;		 
+          else MCEff = 0.66;             
           if (bjet2PassMedium) bjet2EventScaleFactor = bjet2ScaleFactor;
           else bjet2EventScaleFactor = ( 1/MCEff - bjet2ScaleFactor) / ( 1/MCEff - 1);
       }
@@ -1055,6 +1129,35 @@ class ControlSampleEvents {
       return corrFactor;
   }
 
+  //get the correct event weight in data for events passing a photon trigger
+  float getPhotonTriggerWeight(){
+    //luminosities collected by each photon trigger
+    float lumi_HLTPhoton50  = 1.353e0 + 4.921e0 + 7.947e0 + 8.131e0;
+    float lumi_HLTPhoton75  = 8.111e0 + 2.953e1 + 4.768e1 + 4.879e1;
+    float lumi_HLTPhoton90  = 1.622e1 + 6.408e1 + 1.010e2 + 9.948e1;
+    float lumi_HLTPhoton135 = 8.893e2 + 1.476e2 + 5.429e3 + 7.318e3;
+    float lumi_HLTPhoton150 = 8.893e2 + 4.429e3 + 7.152e3 + 7.318e3;
+
+    double triggerWeight = 0.0;
+    //get weight if each photon trigger is associated with a particular pt range
+    if(HLT_Photon150 && pho1.Pt() > 165){ 
+        triggerWeight = 1.0;
+    }
+    else if(HLT_Photon135 && pho1.Pt() > 150 && pho1.Pt() < 165){
+        triggerWeight = lumi_HLTPhoton150/lumi_HLTPhoton135;
+    }
+    else if(HLT_Photon90 && pho1.Pt() > 100 && pho1.Pt() < 150){
+        triggerWeight = lumi_HLTPhoton150/lumi_HLTPhoton90;
+    }
+    else if(HLT_Photon75 && pho1.Pt() > 90 && pho1.Pt() < 100){
+        triggerWeight = lumi_HLTPhoton150/lumi_HLTPhoton75; 
+    }
+    else if(HLT_Photon50 && pho1.Pt() < 90){
+        triggerWeight = lumi_HLTPhoton150/lumi_HLTPhoton50;
+    }
+    return triggerWeight;
+  }
+
  private:
   TLorentzVector* genlep1Ptr;
   TLorentzVector* genlep2Ptr;
@@ -1066,9 +1169,10 @@ class ControlSampleEvents {
   TLorentzVector* jet2Ptr;
   TLorentzVector* pho1Ptr;
   TLorentzVector* pho2Ptr;
-      
+
 }; 
 
 
 #endif
+
 
