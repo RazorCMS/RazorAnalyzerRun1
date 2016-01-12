@@ -178,6 +178,14 @@ void RazorAnalyzer::HggRazor(string outFileName, bool combineTrees)
   float Mhb;//mass of higgs+highest CSV jet
   int nMT;//number of MT variables n_jets+1
   
+  //--------------------
+  //Efficiency Variables
+  //--------------------
+  
+  int effPhotonsAbove40GeV, effMoreThanTwoPhotons, effHiggsPt, effMoreThanZeroJet, effPhotonIsolation;
+  effPhotonsAbove40GeV = effMoreThanTwoPhotons = effHiggsPt = effMoreThanZeroJet = effPhotonIsolation = 0;
+
+  
   //set branches on big tree
   if(combineTrees){
     razorTree->Branch("lumi", &lumi, "lumi/i");
@@ -710,6 +718,7 @@ void RazorAnalyzer::HggRazor(string outFileName, bool combineTrees)
 	if ( _debug ) std::cout << "[DEBUG]: no photons above 40 GeV, nphotons: " << phoCand.size() << std::endl;
 	continue;
       }
+    effPhotonsAbove40GeV += 1.0;
     
     if ( phoCand.size() < 2 )
       {
@@ -722,6 +731,7 @@ void RazorAnalyzer::HggRazor(string outFileName, bool combineTrees)
 	  }
 	continue;
       }
+    effMoreThanTwoPhotons += 1.0;
     
     //find the "best" photon pair, higher Pt!
     TLorentzVector HiggsCandidate(0,0,0,0);
@@ -810,6 +820,7 @@ void RazorAnalyzer::HggRazor(string outFileName, bool combineTrees)
 	if ( _debug ) std::cout << "[DEBUG]: Higgs Pt < 20 GeV, H pt: " << HiggsCandidate.Pt() << std::endl; 
 	continue;
       }
+    effHiggsPt += 1.0;
     
     //if the best candidate pair has a photon in the endcap, reject the event
     if ( fabs( Pho_Eta[0] ) > 1.44 || fabs( Pho_Eta[1] ) > 1.44 )
@@ -830,6 +841,8 @@ void RazorAnalyzer::HggRazor(string outFileName, bool combineTrees)
 	  }
 	continue;
       }
+    
+    effPhotonIsolation += 1.0;
 
     mggRes = 0.5*sqrt( Pho_sigmaEOverE[0]*Pho_sigmaEOverE[0] + Pho_sigmaEOverE[1]*Pho_sigmaEOverE[1] );
     //record higgs candidate info
@@ -899,6 +912,7 @@ void RazorAnalyzer::HggRazor(string outFileName, bool combineTrees)
       }
     }
     
+    effMoreThanZeroJet += 1.0;
     //if there are no good jets, reject the event
     if( n_Jets == 0 )
       {
@@ -906,6 +920,7 @@ void RazorAnalyzer::HggRazor(string outFileName, bool combineTrees)
 	continue;
       }
     nMT = n_Jets + 1;
+
     //S o rt i n g   j e t s   b y   p T 
     //----------------------------------
     auto sortTLV = [](TLorentzVector a, TLorentzVector b){ return a.Pt() > b.Pt() ? true : false; };
@@ -957,8 +972,9 @@ void RazorAnalyzer::HggRazor(string outFileName, bool combineTrees)
     TLorentzVector t1PFMET = makeTLorentzVectorPtEtaPhiM( metType0Plus1Pt, 0, metType0Plus1Phi, 0 );
     
     if ( JetsPlusHiggsCandidate.size() < 2 ) continue;
+    //std::cout << "njets + higgs: " << JetsPlusHiggsCandidate.size() << std::endl;
     vector<TLorentzVector> hemispheres = getHemispheres(JetsPlusHiggsCandidate);
-    std::vector< TLorentzVector > hemPhotons = getHemispheres( JetsPlusPhotons );
+    //std::vector< TLorentzVector > hemPhotons = getHemispheres( JetsPlusPhotons );
     std::vector< std::vector<int> > index_test = getHemispheresV2( JetsPlusHiggsCandidate );
     
     int ggHem = -1;
@@ -1021,10 +1037,13 @@ void RazorAnalyzer::HggRazor(string outFileName, bool combineTrees)
       }
     
     theMR     = computeMR(hemispheres[0], hemispheres[1]); 
-    MR_pho    = computeMR( hemPhotons[0], hemPhotons[1] );
+    //MR_pho    = computeMR( hemPhotons[0], hemPhotons[1] );
+    MR_pho    = computeMR( hemispheres[0], hemispheres[1] );
     theRsq    = computeRsq(hemispheres[0], hemispheres[1], PFMET);
     t1Rsq     = computeRsq(hemispheres[0], hemispheres[1], t1PFMET);
-    t1Rsq_pho = computeRsq( hemPhotons[0], hemPhotons[1], t1PFMET );
+    //t1Rsq_pho = computeRsq( hemPhotons[0], hemPhotons[1], t1PFMET );
+    t1Rsq_pho = computeRsq( hemispheres[0], hemispheres[1], t1PFMET );
+    
     MET       = metPt;
     phiMET    = metPhi;
     t1MET     = metType0Plus1Pt;
@@ -1208,6 +1227,21 @@ void RazorAnalyzer::HggRazor(string outFileName, bool combineTrees)
       for( auto& box : razorBoxesSimple ) box.second->Write();
     }
   NEvents->Write();
+  double totalEntries = NEvents->Integral();
+  effPhotonsAbove40GeV = effPhotonsAbove40GeV/totalEntries;
+  effMoreThanTwoPhotons = effMoreThanTwoPhotons/totalEntries;
+  effHiggsPt = effHiggsPt/totalEntries;
+  effMoreThanZeroJet = effMoreThanZeroJet/totalEntries;
+  effPhotonIsolation = effPhotonIsolation/totalEntries;
+
+  TTree* effTree = new TTree( "effTree", "Tree with efficiency to all cuts");
+  effTree->Branch("effPhotonsAbove40GeV", &effPhotonsAbove40GeV, "effPhotonsAbove40GeV/F");
+  effTree->Branch("effMoreThanTwoPhotons", &effMoreThanTwoPhotons, "effMoreThanTwoPhotons/F");
+  effTree->Branch("effHiggsPt", &effHiggsPt, "effHiggsPt/F");
+  effTree->Branch("effMoreThanZeroJet", &effMoreThanZeroJet, "effMoreThanZeroJet/F");
+  effTree->Branch("effPhotonIsolation", &effPhotonIsolation, "effPhotonIsolation/F");
+  effTree->Fill();
+  effTree->Write();
   
   outFile.Close();
 }
