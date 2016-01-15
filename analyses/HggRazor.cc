@@ -146,6 +146,7 @@ void RazorAnalyzer::HggRazor(string outFileName, bool combineTrees)
   
   //tree variables
   bool trigger;
+  float nlspMass, lspMass;
   int n_Jets, nLooseBTaggedJets, nMediumBTaggedJets;
   int nLooseMuons, nTightMuons, nLooseElectrons, nTightElectrons, nTightTaus;
   float theMR, MR_pho;
@@ -182,8 +183,8 @@ void RazorAnalyzer::HggRazor(string outFileName, bool combineTrees)
   //Efficiency Variables
   //--------------------
   
-  int effPhotonsAbove40GeV, effMoreThanTwoPhotons, effHiggsPt, effMoreThanZeroJet, effPhotonIsolation;
-  effPhotonsAbove40GeV = effMoreThanTwoPhotons = effHiggsPt = effMoreThanZeroJet = effPhotonIsolation = 0;
+  float effPhotonsAbove40GeV, effMoreThanTwoPhotons, effHiggsPt, effMoreThanZeroJet, effPhotonIsolation;
+  effPhotonsAbove40GeV = effMoreThanTwoPhotons = effHiggsPt = effMoreThanZeroJet = effPhotonIsolation = 0.0;
 
   
   //set branches on big tree
@@ -192,6 +193,8 @@ void RazorAnalyzer::HggRazor(string outFileName, bool combineTrees)
     razorTree->Branch("run", &run, "run/i");
     razorTree->Branch("event", &event, "event/i");
     razorTree->Branch("trigger", &trigger, "trigger/O");
+    razorTree->Branch("nslpMass", &nlspMass, "nlspMass/F");
+    razorTree->Branch("lspMass", &lspMass, "lspMass/F");
     razorTree->Branch("nLooseBTaggedJets", &nLooseBTaggedJets, "nLooseBTaggedJets/I");
     razorTree->Branch("nMediumBTaggedJets", &nMediumBTaggedJets, "nMediumBTaggedJets/I");
     razorTree->Branch("nLooseMuons", &nLooseMuons, "nLooseMuons/I");
@@ -293,6 +296,8 @@ void RazorAnalyzer::HggRazor(string outFileName, bool combineTrees)
       box.second->Branch("run", &run, "run/i");
       box.second->Branch("event", &event, "event/i");
       box.second->Branch("trigger", &trigger, "trigger/O");
+      box.second->Branch("nslpMass", &nlspMass, "nlspMass/F");
+      box.second->Branch("lspMass", &lspMass, "lspMass/F");
       box.second->Branch("nLooseBTaggedJets", &nLooseBTaggedJets, "nLooseBTaggedJets/I");
       box.second->Branch("nMediumBTaggedJets", &nMediumBTaggedJets, "nMediumBTaggedJets/I");
       box.second->Branch("nLooseMuons", &nLooseMuons, "nLooseMuons/I");
@@ -510,6 +515,8 @@ void RazorAnalyzer::HggRazor(string outFileName, bool combineTrees)
     //reset tree variables
     trigger = false;
     n_Jets = 0;
+    nlspMass = -99;
+    lspMass = -99;
     nLooseBTaggedJets = 0;
     nMediumBTaggedJets = 0;
     nLooseMuons = 0;
@@ -615,6 +622,14 @@ void RazorAnalyzer::HggRazor(string outFileName, bool combineTrees)
     trigger = HLTDecision[25] || HLTDecision[26] || HLTDecision[27] || HLTDecision[28];
     //if ( !trigger ) continue;
     //Save trigger decision in tree instead of rejecting events (this needs to be done at the ntuple level)
+    
+    for ( int i = 0; i < nGenParticle; i++ )
+      {
+	double pmass = sqrt( gParticleE[i]*gParticleE[i] - gParticlePt[i]*gParticlePt[i] - gParticlePt[i]*sinh(gParticleEta[i])*gParticlePt[i]*sinh(gParticleEta[i]));
+	//if ( abs(gParticleId[i]) == 1000022 || abs(gParticleId[i]) == 1000023 || abs(gParticleId[i]) == 1000039 || abs(gParticleId[i]) == 1000024 ) std::cout << gParticleId[i] << " status: " << gParticleStatus[i] << " " << pmass << std::endl;
+	if ( abs(gParticleId[i]) == 1000022 && gParticleStatus[i] == 3 ) lspMass  = pmass;
+	if ( abs(gParticleId[i]) == 1000024 && gParticleStatus[i] == 3 ) nlspMass = pmass;
+      }
     
     //muon selection
     for(int i = 0; i < nMuons; i++){
@@ -1233,6 +1248,15 @@ void RazorAnalyzer::HggRazor(string outFileName, bool combineTrees)
   effHiggsPt = effHiggsPt/totalEntries;
   effMoreThanZeroJet = effMoreThanZeroJet/totalEntries;
   effPhotonIsolation = effPhotonIsolation/totalEntries;
+
+
+  std::cout << "effPhotonsAbove40GeV: " << effPhotonsAbove40GeV << std::endl;
+  std::cout << "effMoreThanTwoPhotons: "<< effMoreThanTwoPhotons << std::endl;
+  std::cout << "effHiggsPt: "<< effHiggsPt << std::endl;
+  std::cout << "effMoreThanZeroJet: "<< effMoreThanZeroJet << std::endl;
+  std::cout << "effPhotonIsolation: "<< effPhotonIsolation << std::endl;
+  std::cout << "total entries: " << totalEntries << std::endl;
+  
 
   TTree* effTree = new TTree( "effTree", "Tree with efficiency to all cuts");
   effTree->Branch("effPhotonsAbove40GeV", &effPhotonsAbove40GeV, "effPhotonsAbove40GeV/F");

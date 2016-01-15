@@ -147,6 +147,8 @@ int main(int argc, char* argv[]){
         analyzer.EnableMuons();
         analyzer.EnableTaus();
         analyzer.EnablePhotons();
+	analyzer.EnableMC();
+	analyzer.EnableGenParticles();
         analyzer.HggRazor(outputFileName, false); //change the bool to true if you want all analysis boxes combined in one tree
     }
     else if(analysisType == "run2hggrazor"){
